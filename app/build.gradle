@@ -19,4 +19,7 @@ android {
 }
 
 dependencies {
+    compile 'com.android.support:support-v4:18.0.0'
+    compile files('/Users/cprodescu/workspace/order-now/libraries/card.io/card.io.jar')
+    compile files('/Users/cprodescu/workspace/order-now/libraries/parse/Parse-1.4.0.jar')
 }
