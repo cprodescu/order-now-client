@@ -25,6 +25,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*
         ParseObject testObject = new ParseObject("TestObject");
         testObject.put("foo", "bar");
         testObject.saveInBackground(new SaveCallback() {
@@ -33,9 +34,8 @@ public class MainActivity extends Activity {
                 Log.d("Order", "Done with exc: " + e.getMessage());
             }
         });
-                Log.d("adas", "DONE");
 
-        /*
+
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment())
