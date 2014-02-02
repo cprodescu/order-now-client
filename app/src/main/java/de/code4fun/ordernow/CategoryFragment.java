@@ -1,11 +1,15 @@
 package de.code4fun.ordernow;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -32,11 +36,26 @@ public class CategoryFragment extends Fragment {
                 };
 
         // Pass the factory into the ParseQueryAdapter's constructor.
-        ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity().getApplicationContext(), factory);
+        final ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity().getApplicationContext(), factory);
         adapter.setTextKey("name");
         adapter.setImageKey("image");
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ParseObject item = adapter.getItem(position);
+                String categoryId = item.getString("category_id");
+
+                getActivity().getFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.container, new ItemFragment(categoryId))
+                        .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
+                        .addToBackStack(null)
+                        .commit();
+                Log.d("OrderNow", "LAL");
+            }
+        });
         listView.setAdapter(adapter);
 
         /*

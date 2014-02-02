@@ -22,7 +22,7 @@
 
             android:text="@string/app_name"
             android:textStyle="bold"
-            android:textSize="@dimen/activity_title_font"
+            android:textSize="@dimen/activity_title_font_size"
             android:layout_weight="1"
             />
 
@@ -42,11 +42,12 @@
         android:layout_marginTop="5dp"
         android:background="@android:color/darker_gray"/>
 
-    <fragment
-        android:name="de.code4fun.ordernow.CategoryFragment"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:id="@+id/container"/>
+        android:id="@+id/container">
+
+    </FrameLayout>
 
 </LinearLayout>

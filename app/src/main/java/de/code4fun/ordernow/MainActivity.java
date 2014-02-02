@@ -25,21 +25,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                Log.d("Order", "Done with exc: " + e.getMessage());
-            }
-        });
-        */
-
         if (savedInstanceState == null) {
-            //getFragmentManager().beginTransaction()
-            //        .add(R.id.container, new CategoryFragment())
-            //        .commit();
+            getFragmentManager().beginTransaction()
+                    .add(R.id.container, new CategoryFragment())
+                    .commit();
         }
     }
 
