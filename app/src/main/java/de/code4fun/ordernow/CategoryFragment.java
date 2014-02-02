@@ -8,12 +8,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseQueryAdapter;
+import com.parse.ParseQueryAdapter.OnQueryLoadListener;
+import com.parse.ParseException;
+
+import java.util.List;
 
 public class CategoryFragment extends Fragment {
     public CategoryFragment() {
@@ -22,8 +28,8 @@ public class CategoryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-
+        final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        final ViewGroup parent = (ViewGroup) rootView.getParent(); // need a final ViewGroup eq to container
         ParseQueryAdapter.QueryFactory<ParseObject> factory =
                 new ParseQueryAdapter.QueryFactory<ParseObject>() {
                     public ParseQuery create() {
@@ -39,6 +45,25 @@ public class CategoryFragment extends Fragment {
         final ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity().getApplicationContext(), factory);
         adapter.setTextKey("name");
         adapter.setImageKey("image");
+
+        adapter.addOnQueryLoadListener(new OnQueryLoadListener<ParseObject>() {
+            public void onLoading() {
+                rootView.setVisibility(View.GONE);
+
+                ProgressBar progrBar = (ProgressBar) parent.findViewById(R.id.progressCateg);
+                progrBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onLoaded(List<ParseObject> parseObjects, Exception e) {
+                rootView.setVisibility(View.VISIBLE);
+
+                ProgressBar progrBar = (ProgressBar) parent.findViewById(R.id.progressCateg);
+              //  progrBar.setVisibility(View.GONE);
+            }
+
+
+        });
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
