@@ -26,17 +26,17 @@ public class CategoryFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-        final ViewGroup parent = (ViewGroup) rootView.getParent(); // need a final ViewGroup eq to container
         ParseQueryAdapter.QueryFactory<ParseObject> factory =
                 new ParseQueryAdapter.QueryFactory<ParseObject>() {
                     public ParseQuery create() {
                         ParseQuery query = new ParseQuery("Category");
 
                         // TODO select on user props
-
+                        query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                        query.setMaxCacheAge(3600 * 1000);
                         return query;
                     }
                 };
@@ -45,25 +45,6 @@ public class CategoryFragment extends Fragment {
         final ParseQueryAdapter<ParseObject> adapter = new ParseQueryAdapter<ParseObject>(getActivity().getApplicationContext(), factory);
         adapter.setTextKey("name");
         adapter.setImageKey("image");
-
-        adapter.addOnQueryLoadListener(new OnQueryLoadListener<ParseObject>() {
-            public void onLoading() {
-                rootView.setVisibility(View.GONE);
-
-                ProgressBar progrBar = (ProgressBar) parent.findViewById(R.id.progressCateg);
-                progrBar.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onLoaded(List<ParseObject> parseObjects, Exception e) {
-                rootView.setVisibility(View.VISIBLE);
-
-                ProgressBar progrBar = (ProgressBar) parent.findViewById(R.id.progressCateg);
-              //  progrBar.setVisibility(View.GONE);
-            }
-
-
-        });
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -78,7 +59,6 @@ public class CategoryFragment extends Fragment {
                         .setTransition(FragmentTransaction.TRANSIT_ENTER_MASK)
                         .addToBackStack(null)
                         .commit();
-                Log.d("OrderNow", "LAL");
             }
         });
         listView.setAdapter(adapter);

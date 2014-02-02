@@ -24,34 +24,27 @@ public class ItemFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-
-        final ViewGroup cont = container; //need to have this final
         final View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ItemAdapter adapter = new ItemAdapter(inflater.getContext(), mCategoryId);
-
+        /*
         adapter.addOnQueryLoadListener(new ParseQueryAdapter.OnQueryLoadListener<ParseObject>() {
+            @Override
             public void onLoading() {
-                rootView.setVisibility(View.GONE);
-
-                ProgressBar progrBar = (ProgressBar) cont.findViewById(R.id.progressCateg);
+                ProgressBar progrBar = (ProgressBar) container.findViewById(R.id.progressCateg);
                 progrBar.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onLoaded(List<ParseObject> parseObjects, Exception e) {
-                rootView.setVisibility(View.GONE);
-
-                ProgressBar progrBar = (ProgressBar) cont.findViewById(R.id.progressCateg);
+                ProgressBar progrBar = (ProgressBar) container.findViewById(R.id.progressCateg);
                 progrBar.setVisibility(View.GONE);
             }
-
-
         });
+        */
 
-
+        ItemAdapter adapter = new ItemAdapter(inflater.getContext(), mCategoryId);
         ListView listView = (ListView) rootView.findViewById(R.id.list_view);
         listView.setAdapter(adapter);
 

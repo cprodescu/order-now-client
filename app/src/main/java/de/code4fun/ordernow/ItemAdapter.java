@@ -23,14 +23,18 @@ public class ItemAdapter extends ParseQueryAdapter<ParseObject> {
     public ItemAdapter(Context context, final String categoryId) {
         super(context, new ParseQueryAdapter.QueryFactory<ParseObject>() {
             public ParseQuery<ParseObject> create() {
-                // Here we can configure a ParseQuery to display
-                // only top-rated meals.
                 ParseQuery query = new ParseQuery("Item");
                 query.whereEqualTo("category_id", categoryId);
                 query.orderByAscending("name");
+
+                query.setCachePolicy(ParseQuery.CachePolicy.CACHE_ELSE_NETWORK);
+                query.setMaxCacheAge(3600 * 1000);
+
                 return query;
             }
         });
+
+        setAutoload(true);
     }
 
     @Override
@@ -51,7 +55,6 @@ public class ItemAdapter extends ParseQueryAdapter<ParseObject> {
         } else {
             priceTextView.setText("");
         }
-        imageView.setPlaceholder(getContext().getResources().getDrawable(R.drawable.fail));
         imageView.setParseFile(object.getParseFile("image"));
         imageView.loadInBackground();
         descriptionTextView.setText(object.getString("description"));
