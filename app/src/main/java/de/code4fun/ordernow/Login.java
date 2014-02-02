@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,10 +38,12 @@ public class Login extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 
-		//Initializing Parse SDK
-		onCreateParse();
 		//Calling ParseAnalytics to see Analytics of our app
 		ParseAnalytics.trackAppOpened(getIntent());
+
+        if (ParseUser.getCurrentUser() != null) {
+            loginSuccessful();
+        }
 		
 		// creating connection detector class instance
 
@@ -100,12 +103,6 @@ public class Login extends Activity{
 
 
 	}
-
-	public void onCreateParse() {
-        Parse.initialize(this, "OPmH20F10mK1HrXJTVxVb3S6RLTuiT3J1LAmV3JG",
-                "ZEnh4BXnGng5T6nNGKJnd27mnbz6NRzCmclvpwy7");
-	}
-
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -192,6 +189,7 @@ public class Login extends Activity{
 		// TODO Auto-generated method stub
 		Intent in =  new Intent(Login.this, MainActivity.class);
 		startActivity(in);
+        finish();
 	}
 	protected void loginUnSuccessful() {
 		// TODO Auto-generated method stub

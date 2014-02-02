@@ -34,14 +34,13 @@ public class MainActivity extends Activity {
                 Log.d("Order", "Done with exc: " + e.getMessage());
             }
         });
-
+        */
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.container, new PlaceholderFragment())
-                    .commit();
+            //getFragmentManager().beginTransaction()
+            //        .add(R.id.container, new PlaceholderFragment())
+            //        .commit();
         }
-        */
     }
 
 
@@ -63,22 +62,6 @@ public class MainActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
     }
 
 }

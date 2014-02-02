@@ -22,168 +22,169 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class SignUp extends Activity implements OnClickListener{
-	private EditText mUserNameEditText;
-	private EditText mEmailEditText; 
-	private EditText mPasswordEditText;
-	private EditText mConfirmPasswordEditText;
-	private Button mCreateAccountButton;
+    private EditText mUserNameEditText;
+    private EditText mEmailEditText;
+    private EditText mPasswordEditText;
+    private EditText mConfirmPasswordEditText;
+    private Button mCreateAccountButton;
 
-	private String mEmail;
-	private String mUsername;
-	private String mPassword;
-	private String mConfirmPassword;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_signup);
-		
-		mUserNameEditText = (EditText) findViewById(R.id.etUsername);
-		mEmailEditText = (EditText) findViewById(R.id.etEmail);
-		mPasswordEditText = (EditText) findViewById(R.id.etPassword);
-		mConfirmPasswordEditText = (EditText) findViewById(R.id.etPasswordConfirm);
+    private String mEmail;
+    private String mUsername;
+    private String mPassword;
+    private String mConfirmPassword;
 
-		mCreateAccountButton = (Button) findViewById(R.id.btnCreateAccount);
-		mCreateAccountButton.setOnClickListener(this);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        // TODO Auto-generated method stub
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_signup);
 
-	}
+        mUserNameEditText = (EditText) findViewById(R.id.etUsername);
+        mEmailEditText = (EditText) findViewById(R.id.etEmail);
+        mPasswordEditText = (EditText) findViewById(R.id.etPassword);
+        mConfirmPasswordEditText = (EditText) findViewById(R.id.etPasswordConfirm);
 
-	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch (v.getId()) {
-		case R.id.btnCreateAccount:
+        mCreateAccountButton = (Button) findViewById(R.id.btnCreateAccount);
+        mCreateAccountButton.setOnClickListener(this);
 
-				createAccount();
+    }
+
+    @Override
+    public void onClick(View v) {
+        // TODO Auto-generated method stub
+        switch (v.getId()) {
+            case R.id.btnCreateAccount:
+
+                createAccount();
 			/*
 				showAlertDialog(getApplicationContext(), "No Internet Connection",
 						"You don't have internet connection.", false);
 			*/
 
-			
-			break;
 
-		default:
-			break;
-		}
-	}
+                break;
 
-	private void createAccount(){
-		clearErrors();
+            default:
+                break;
+        }
+    }
 
-		boolean cancel = false;
-		View focusView = null;
+    private void createAccount(){
+        clearErrors();
 
-		// Store values at the time of the login attempt.
-		mEmail = mEmailEditText.getText().toString();
-		mUsername = mUserNameEditText.getText().toString();
-		mPassword = mPasswordEditText.getText().toString();
-		mConfirmPassword = mConfirmPasswordEditText.getText().toString();
+        boolean cancel = false;
+        View focusView = null;
 
-		// Check for a valid confirm password.
-		if (TextUtils.isEmpty(mConfirmPassword)) {
-			mConfirmPasswordEditText.setError(getString(R.string.error_field_required));
-			focusView = mConfirmPasswordEditText;
-			cancel = true;
-		} else if (mPassword != null && !mConfirmPassword.equals(mPassword)) {
-			mPasswordEditText.setError(getString(R.string.error_invalid_confirm_password));
-			focusView = mPasswordEditText;
-			cancel = true;
-		}
-		// Check for a valid password.
-		if (TextUtils.isEmpty(mPassword)) {
-			mPasswordEditText.setError(getString(R.string.error_field_required));
-			focusView = mPasswordEditText;
-			cancel = true;
-		} else if (mPassword.length() < 4) {
-			mPasswordEditText.setError(getString(R.string.error_invalid_password));
-			focusView = mPasswordEditText;
-			cancel = true;
-		}
+        // Store values at the time of the login attempt.
+        mEmail = mEmailEditText.getText().toString();
+        mUsername = mUserNameEditText.getText().toString();
+        mPassword = mPasswordEditText.getText().toString();
+        mConfirmPassword = mConfirmPasswordEditText.getText().toString();
 
-		// Check for a valid email address.
-		if (TextUtils.isEmpty(mEmail)) {
-			mEmailEditText.setError(getString(R.string.error_field_required));
-			focusView = mEmailEditText;
-			cancel = true;
-		} else if (!mEmail.contains("@")) {
-			mEmailEditText.setError(getString(R.string.error_invalid_email));
-			focusView = mEmailEditText;
-			cancel = true;
-		}
+        // Check for a valid confirm password.
+        if (TextUtils.isEmpty(mConfirmPassword)) {
+            mConfirmPasswordEditText.setError(getString(R.string.error_field_required));
+            focusView = mConfirmPasswordEditText;
+            cancel = true;
+        } else if (mPassword != null && !mConfirmPassword.equals(mPassword)) {
+            mPasswordEditText.setError(getString(R.string.error_invalid_confirm_password));
+            focusView = mPasswordEditText;
+            cancel = true;
+        }
+        // Check for a valid password.
+        if (TextUtils.isEmpty(mPassword)) {
+            mPasswordEditText.setError(getString(R.string.error_field_required));
+            focusView = mPasswordEditText;
+            cancel = true;
+        } else if (mPassword.length() < 4) {
+            mPasswordEditText.setError(getString(R.string.error_invalid_password));
+            focusView = mPasswordEditText;
+            cancel = true;
+        }
 
-		if (cancel) {
-			// There was an error; don't attempt login and focus the first
-			// form field with an error.
-			focusView.requestFocus();
-		} else {
-			// Show a progress spinner, and kick off a background task to
-			// perform the user login attempt.
-			Toast.makeText(getApplicationContext(), "signUp", Toast.LENGTH_SHORT).show();
-			signUp(mUsername.toLowerCase(Locale.getDefault()), mEmail, mPassword);
+        // Check for a valid email address.
+        if (TextUtils.isEmpty(mEmail)) {
+            mEmailEditText.setError(getString(R.string.error_field_required));
+            focusView = mEmailEditText;
+            cancel = true;
+        } else if (!mEmail.contains("@")) {
+            mEmailEditText.setError(getString(R.string.error_invalid_email));
+            focusView = mEmailEditText;
+            cancel = true;
+        }
 
-		}
+        if (cancel) {
+            // There was an error; don't attempt login and focus the first
+            // form field with an error.
+            focusView.requestFocus();
+        } else {
+            // Show a progress spinner, and kick off a background task to
+            // perform the user login attempt.
+            Toast.makeText(getApplicationContext(), "signUp", Toast.LENGTH_SHORT).show();
+            signUp(mUsername.toLowerCase(Locale.getDefault()), mEmail, mPassword);
 
-	}
+        }
 
-	private void signUp(final String mUsername, String mEmail, String mPassword) {
-		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), mUsername + " - " + mEmail, Toast.LENGTH_SHORT).show();
-		ParseUser user = new ParseUser();
-		user.setUsername(mUsername);
-		user.setPassword(mPassword);
-		user.setEmail(mEmail);
-		 
-		user.signUpInBackground(new SignUpCallback() {
-		  public void done(ParseException e) {
-		    if (e == null) {
-		      signUpMsg("Account Created Successfully");
-		      Intent in = new Intent(getApplicationContext(),MainActivity.class);
-		      startActivity(in);
-		    } else {
-		      // Sign up didn't succeed. Look at the ParseException
-		      // to figure out what went wrong
-		    	signUpMsg("Account already taken.");
-		    }
-		  }
-		});
-	}
+    }
 
-	protected void signUpMsg(String msg) {
-		// TODO Auto-generated method stub
-		Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();	
-	}
+    private void signUp(final String mUsername, String mEmail, String mPassword) {
+        // TODO Auto-generated method stub
+        Toast.makeText(getApplicationContext(), mUsername + " - " + mEmail, Toast.LENGTH_SHORT).show();
+        ParseUser user = new ParseUser();
+        user.setUsername(mUsername);
+        user.setPassword(mPassword);
+        user.setEmail(mEmail);
 
-	private void clearErrors(){ 
-		mEmailEditText.setError(null);
-		mUserNameEditText.setError(null);
-		mPasswordEditText.setError(null);
-		mConfirmPasswordEditText.setError(null);
-	}
+        user.signUpInBackground(new SignUpCallback() {
+            public void done(ParseException e) {
+                if (e == null) {
+                    signUpMsg("Account Created Successfully");
+                    Intent in = new Intent(getApplicationContext(),MainActivity.class);
+                    startActivity(in);
+                    finish();
+                } else {
+                    // Sign up didn't succeed. Look at the ParseException
+                    // to figure out what went wrong
+                    signUpMsg("Account already taken.");
+                }
+            }
+        });
+    }
 
-	@SuppressWarnings("deprecation")
-	public void showAlertDialog(Context context, String title, String message, Boolean status) {
-		AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+    protected void signUpMsg(String msg) {
+        // TODO Auto-generated method stub
+        Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+    }
 
-		// Setting Dialog Title
-		alertDialog.setTitle(title);
+    private void clearErrors(){
+        mEmailEditText.setError(null);
+        mUserNameEditText.setError(null);
+        mPasswordEditText.setError(null);
+        mConfirmPasswordEditText.setError(null);
+    }
 
-		// Setting Dialog Message
-		alertDialog.setMessage(message);
+    @SuppressWarnings("deprecation")
+    public void showAlertDialog(Context context, String title, String message, Boolean status) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
 
-		// Setting alert dialog icon
-		alertDialog.setIcon(R.drawable.fail);
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
 
-		// Setting OK Button
-		alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
 
-		// Showing Alert Message
-		alertDialog.show();
-	}
+        // Setting alert dialog icon
+        alertDialog.setIcon(R.drawable.fail);
 
-	
+        // Setting OK Button
+        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
+
 }
