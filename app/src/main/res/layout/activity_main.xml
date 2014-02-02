@@ -26,12 +26,14 @@
             android:layout_weight="1"
             />
 
-        <Button
+        <ImageView
             android:id="@+id/btn_login"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100px"
+            android:layout_height="100px"
             android:layout_gravity="center_horizontal"
-            android:text="@string/action_sign_in_short"
+            android:src="@drawable/rsz_checkout"
+            android:background="@drawable/sexybutton"
+            android:layout_marginRight="10dp"
             android:layout_weight="0"/>
 
     </LinearLayout>
